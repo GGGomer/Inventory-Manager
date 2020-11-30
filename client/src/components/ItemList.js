@@ -11,19 +11,18 @@ import {
     TransitionGroup
 } from 'react-transition-group';
 import { v1 as uuid } from 'uuid';
+import { connect } from 'react-redux';
+import { getItems } from '../actions/itemActions';
+import PropTypes from 'prop-types';
 
 class ItemList extends Component {
-    state = {
-        items: [
-            { id: uuid(), name: 'Sword' },
-            { id: uuid(), name: 'Shield' },
-            { id: uuid(), name: 'Staff' },
-            { id: uuid(), name: 'Wand' }
-        ]
+
+    componentDidMount() {
+        this.props.getItems();
     }
 
     render() {
-        const { items } = this.state;
+        const { items } = this.props.item;
         return (
             <Container>
                 <Button
@@ -37,7 +36,8 @@ class ItemList extends Component {
                             }));
                         }
                     }}
-                >Add Item</Button>
+                >Add Item
+                </Button>
 
                 <ListGroup>
                     <TransitionGroup className="item-list">
@@ -65,4 +65,13 @@ class ItemList extends Component {
     }
 }
 
-export default ItemList;
+ItemList.propTypes = {
+    getItems: PropTypes.func.isRequired,
+    item: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    item: state.item
+});
+
+export default connect(mapStateToProps, { getItems })(ItemList);
