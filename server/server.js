@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 
 const items = require("./routes/api/items");
+const users = require("./routes/api/users");
 
 const app = express();
 
@@ -14,11 +15,16 @@ const db = require("./config/keys").mongoURI;
 // Connect to Mongo
 
 mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
 app.use("/api/items", items);
+app.use("/api/users", users);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("../client/build"));
