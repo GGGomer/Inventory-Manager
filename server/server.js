@@ -1,16 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
+const config = require("config");
 
 const items = require("./routes/api/items");
 const users = require("./routes/api/users");
+const auth = require("./routes/api/auth");
 
 const app = express();
 
 app.use(express.json());
 
 // DB Config
-const db = require("./config/keys").mongoURI;
+const db = config.get("mongoURI");
 
 // Connect to Mongo
 
@@ -25,6 +27,7 @@ mongoose
 
 app.use("/api/items", items);
 app.use("/api/users", users);
+app.use("/api/auth", auth);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("../client/build"));
