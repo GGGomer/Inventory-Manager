@@ -1,4 +1,3 @@
-// import { v1 as uuid } from "uuid";
 import {
   GET_ITEMS,
   ADD_ITEM,
@@ -7,12 +6,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  items: [
-    // { id: uuid(), name: "Sword" },
-    // { id: uuid(), name: "Shield" },
-    // { id: uuid(), name: "Staff" },
-    // { id: uuid(), name: "Armor" },
-  ],
+  items: [],
   loading: false,
 };
 
